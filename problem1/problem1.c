@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <mpi.h>
 
-double get_part_area(double left, double right) 
+double get_part_area(double left, double right)
 {
     double f_left, f_right;
     f_left = 1.0 / (1 + left * left);
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
     double right_curr = left_bound + delta;
     double proc_res = 0.0;
     int i = 0;
-    proc_cnt = (int) ((right_bound - left_bound) / delta);
+    proc_cnt = round((right_bound - left_bound) / delta);
     for (i; i <  proc_cnt; ++i)
     {
         proc_res += get_part_area(left_curr, right_curr);
@@ -117,6 +117,6 @@ int main(int argc, char *argv[])
     }
 
     MPI_Finalize();
-    
+
     return 0;
 }
