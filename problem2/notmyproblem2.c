@@ -40,11 +40,11 @@ int main(int argc, char *argv[])
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     int n = 10000;
-    double T = 0.1;
+    double T = 0.0001;
 
-    int proc_segm = (int) n / size;
+    int proc_segm = n / size;
     int proc_segm_original = proc_segm;
-    int r = (int) n % size;
+    int r = n % size;
     if (r > rank)
         proc_segm++;
     int proc_len = proc_segm + 2;
@@ -71,8 +71,8 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < iter; ++i)
     {
-        if (i % 1000000 == 0)
-            printf("i = %d\n", i);
+        /*if (i % 1000000 == 0)
+            printf("i = %d\n", i);*/
         if (rank != size - 1)
             MPI_Send(&u[proc_len - 2], 1, MPI_DOUBLE, rank + 1, 0, MPI_COMM_WORLD);
         if (rank != 0)
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
       printf("Estimate time = %lg\n", end_time);
       printf("Approximate solution:\t");
       for(i = 0; i < 11; ++i)
-        printf("%lg\t", u_approx[i]);
+        printf("%lg ", u_fin[i]);
       printf("\n");
       printf("Precise solution:\t");
       for (i = 0; i < 11; i++)
